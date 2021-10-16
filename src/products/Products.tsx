@@ -32,7 +32,7 @@ const Products: FC<ProductsProps> = ({
       }
     };
     handleGetData();
-    console.log('matchhhhhhhh', match)
+    console.log('matchhhhhhhh      aaa', match)
 //   history.push('/profile/id')
   }, [match]);
 
