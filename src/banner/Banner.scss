@@ -1,0 +1,14 @@
+.banner {
+    display: flex;
+    width: 100%;
+    //max-width: 1024px;
+    margin: 10px;
+    img {
+        width: 550px;
+    }
+
+    img:hover {
+
+            opacity: 0.3;
+        }
+}

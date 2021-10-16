@@ -1,0 +1,28 @@
+.ProductOverview {
+  width: 320px;
+  height: 320px;
+  position: relative;
+  margin-right: 20px;
+  margin-top: 20px;
+
+  .product-info {
+    bottom: 0;
+    color: yellow;
+  }
+
+  .product-image {
+    position: absolute;
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .product-info-overlay {
+    width: 100%;
+    position: absolute;
+    background-color: gray;
+    bottom: 0;
+    padding: 15px;
+    text-align: center;
+  }
+
+}
