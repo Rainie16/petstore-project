@@ -12,7 +12,7 @@ const Header: FC<HeaderProps> = ({ history }) => {
   const userState = useSelector((state:any)=> state?.user);
   const { SubMenu } = Menu;
   const [current, setCurrent] = useState("");
-  console.log("what is inside history", history);
+  // console.log("what is inside history", history);
 
   const handleClick = (e: any) => {
     console.log("click ", e);
@@ -33,20 +33,6 @@ const Header: FC<HeaderProps> = ({ history }) => {
                 PAW PAW SHOP
             </span>
           </div>
-        {/* <ul className="nav navbar-nav">
-                    <li>
-                        <NavLink to={appConstants.homeRoute} className="nav-link">Home</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to={appConstants.productByType} className="nav-link">Shop</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to={appConstants.servicesRoute} className="nav-link">Pet Services</NavLink>
-                    </li>
-                </ul>
-                <ul className="nav navbar-nav" style={{marginLeft:'auto'}}>
-                    <NavLink to={appConstants.loginRoute} className="nav-link">Login</NavLink>
-                </ul> */}
         <Menu
           onClick={(e) => handleClick(e)}
           selectedKeys={[current]}
@@ -59,15 +45,23 @@ const Header: FC<HeaderProps> = ({ history }) => {
             <Menu.Item key="/products/cat">Cat</Menu.Item>
           </SubMenu>
           <Menu.Item key="/service">Service</Menu.Item>
-          {/*<Menu.Item key="/login">Login</Menu.Item>*/}
-          {/*<Menu.Item key="/register">Register</Menu.Item>*/}
             {
-              !userState?  <SubMenu className='login' key="/loginOrRegister" title="Login"><Menu.Item key="/login">Login</Menu.Item> <Menu.Item key="/register">Register</Menu.Item> </SubMenu> :
-                  <Menu.Item key="/logout">Logout</Menu.Item>
+              !userState?.userInfo?.user?
+              <SubMenu className='login' key="/loginOrRegister" title="Login">
+                <Menu.Item key="/login">Login</Menu.Item>
+                <Menu.Item key="/register">Register</Menu.Item>
+              </SubMenu>
+              :
+              <Menu.Item key="/logout">Logout</Menu.Item>
             }
 
           {
-            userState && <Menu.Item key={`/user-details/${userState?.userInfo?.user?.userInfo?.id}`}>About you</Menu.Item>
+            userState?.userInfo?.user &&
+            <SubMenu key="/about-me" title="About me">
+              <Menu.Item key={`/user-details`}>personal info</Menu.Item>
+              <Menu.Item key={`/pets`}>furry family</Menu.Item>
+              <Menu.Item key={`/payments`}>payment info</Menu.Item>
+            </SubMenu>
           }
         </Menu>
       </nav>

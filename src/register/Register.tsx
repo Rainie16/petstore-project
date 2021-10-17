@@ -1,16 +1,22 @@
-import {SyntheticEvent, useState} from "react";
-import {register} from "../actions/auth.action";
-import Pets from "../user-details/pet/Pets";
-import Paymentinfo from "../user-details/payment-info/Paymentinfo";
+import {SyntheticEvent, useEffect, useState} from "react";
+import {login, register} from "../actions/auth.action";
+import {connect, useDispatch, useSelector} from "react-redux";
+import {RouteComponentProps} from "react-router-dom";
 
-const Register = () => {
+const Register = (props: RouteComponentProps) => {
+
+    // const newUser = useSelector((state:any) => state?.user);
+
     const [user, setUser] = useState({
         username:'',
         password:'',
         confirmPassword:''
     });
 
-    console.log(user);
+    // console.log("Component newUser", newUser);
+
+    const dispatch = useDispatch();
+   // const dispatch1 = useDispatch();
 
     const handleFormControl = (event: SyntheticEvent) => {
         const inputEle = event.target as HTMLInputElement;
@@ -18,7 +24,6 @@ const Register = () => {
             ...user,
             [inputEle.name]: inputEle.value
         };
-        console.log(user);
         setUser(userCopy)
     }
 
@@ -29,13 +34,24 @@ const Register = () => {
             return;
         }
         try{
-            setUser(user);
-            register({username:user.username, password:user.password});
-            console.log("does it able to show?" , user)
+            // setUser(user);
+            dispatch(register(user));
+            props.history.push( "/");
+
         }catch(error) {
             console.error(error);
         }
     }
+
+    // const unpw = {username: user.username, password: user.password}
+
+    // useEffect(() => {
+    //         if(newUser?.success == true){
+    //             console.log("register component user", user);
+    //             dispatch1(login(unpw));
+    //         }
+    //
+    // },[user]);
 
     return(
         <form onSubmit={submitHandler}>
@@ -45,10 +61,14 @@ const Register = () => {
             <input name="password" placeholder="password" value={user.password} onChange={handleFormControl} type="password"/>
             <input name="confirmPassword" placeholder="confirm password" value={user.confirmPassword} onChange={handleFormControl} type="password"/>
             <button>Register!</button>
-            <Pets/>
-            <Paymentinfo/>
         </form>
     );
 };
 
-export default Register;
+// const mapDispatchToProps = (dispatch: any) => ({
+//     handlerRegister: (user:{username:string, password:string}) => dispatch(register(user))
+// })
+
+
+
+export default connect()(Register);

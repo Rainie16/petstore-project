@@ -12,23 +12,6 @@ const Login = (props:RouteComponentProps) => {
         password:'',
     });
 
-    // useEffect( ()=>{
-    // const handleGetData =  async () => {
-    //     dispatch(checkLogin());
-    //     try{
-    //         const result: any = await (!!handleGetUser && handleGetUser);
-    //         if (result?.payload.status === 200) {
-    //             setDetails(result?.payload.data);
-    //             console.log("what is details", details);
-    //             console.log("login result", result);
-    //         }else throw result.payload;
-    //     } catch (error) {
-    //         console.log ("fail to login!");
-    //     }
-    // }
-    // handleGetData();
-    // })
-
     const dispatch = useDispatch();
     const dispatch1 = useDispatch();
     const handleFormControl = (event: SyntheticEvent) => {
@@ -38,12 +21,12 @@ const Login = (props:RouteComponentProps) => {
             [inputEle.name]: inputEle.value
         };
         setUser(userCopy);
-        //console.log(user);
+        console.log("what will return for setUser",user);
     };
 
     const submitHandler = (event: SyntheticEvent) => {
         if(!user.username || !user.password){
-            alert('Please check your username or password')
+            alert('Please enter your username and password')
         } else {
             event.preventDefault();
             dispatch(login(user));
@@ -56,7 +39,7 @@ const Login = (props:RouteComponentProps) => {
     const userState = useSelector((state:any)=> state?.user);
     //console.log('mmmmmmmmmmmm',user1);
 
-    console.log('userSt', userState);
+    console.log('userState', userState);
 
     useEffect(() => {
         //const isLoggedin =!!localStorage['user'] && JSON.parse(localStorage['user'])?.success;
@@ -65,23 +48,10 @@ const Login = (props:RouteComponentProps) => {
         const task = async() =>{
             if(!!userState?.isLogin){
                 await dispatch1(checkLogin());
-                console.log("check_login", userState);
-                //      dispatch(getUserByUsername(user.username));
-                //      setDetails( getUserByUsername(user.username));
-                // const handleGetData =  async () => {
-                //
-                //         const result: any = await (!!handleGetUser && handleGetUser);
-                //             dispatch(checkLogin());
-                //             setDetails(result.payload?.data);
-                //             console.log("what is details", details);
-                //             console.log("login result", result);
-                //
-                //     }
-                // handleGetData();
                 props.history.push('/')
             }
         }
-task();
+        task();
 
     },[userState]);
 

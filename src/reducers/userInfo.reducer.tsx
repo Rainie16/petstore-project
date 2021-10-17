@@ -9,6 +9,7 @@ export const userInfoReducer = (state: UserInfo | null = null, action: userInfoA
             console.log(action.payload.data);
             return action.payload.data;
         case appConstants.ADD_USER_INFO:
+            console.log('userinfo action', state);
             return state;
         default:
             return state;
@@ -17,5 +18,5 @@ export const userInfoReducer = (state: UserInfo | null = null, action: userInfoA
 
 export interface userInfoAction {
     type: string,
-    payload: AxiosResponse<UserInfo>
+    payload: AxiosResponse<any>
 }

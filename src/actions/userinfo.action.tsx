@@ -1,9 +1,11 @@
 import axios from "axios";
 import {appConstants} from "../shared/constants/constants";
 import {UserInfo} from "../shared/models/userInfo";
+import {userInfo} from "os";
+
 
 export const getUserInfoById = (payload: number) => {
-    const getUserInfoByIdPromise = axios.get(`http://localhost:8080/user-details/${payload}`);
+    const getUserInfoByIdPromise = axios.get(`http://localhost:8080/user-details`);
     return {
         type: appConstants.GET_USER_INFO_BY_ID,
         payload: getUserInfoByIdPromise,
@@ -11,9 +13,19 @@ export const getUserInfoById = (payload: number) => {
 }
 
 export const addUserInfo = (userInfo: UserInfo) => {
-    const addUserInfoPromise = axios.post(`http://localhost:8080/user-details`, userInfo);
+    const addUserInfoPromise = axios.post(`http://localhost:8080/user-details`,
+            userInfo,
+        );
     return {
         type: appConstants.ADD_USER_INFO,
         payload: addUserInfoPromise,
+    }
+}
+
+export const editUserInfo = (userInfo: UserInfo) => {
+    const editUserInfoPromise = axios.put(`http://localhost:8080/user-details`,userInfo);
+    return {
+        type: appConstants.EDIT_USER_INFO,
+        payload: editUserInfoPromise
     }
 }

@@ -18,6 +18,8 @@ import ProductDetails from './products/product-details/ProductDetails';
 import Register from "./register/Register";
 import Logout from "./logout/Logout";
 import UserInfos from "./user-details/user-info/UserInfos";
+import Pets from "./user-details/pet/Pets";
+import Paymentinfo from "./user-details/payment-info/Paymentinfo";
 
 const root = document.querySelector('#root');
 
@@ -41,6 +43,8 @@ ReactDOM.render(
                     <Route path={appConstants.registerRoute} component={Register}></Route>
                     <Route path={appConstants.logoutRoute} component={Logout}></Route>
                     <Route path={appConstants.userInfoRoute} component={UserInfos}></Route>
+                    <Route path={appConstants.petsRoute} component={Pets}></Route>
+                    <Route path={appConstants.paymentRoute} component={Paymentinfo}></Route>
                 </Switch>
             </App>
         </BrowserRouter>

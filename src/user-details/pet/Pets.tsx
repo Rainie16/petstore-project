@@ -12,6 +12,8 @@ import {
     Switch,
 } from 'antd';
 import moment from 'moment';
+import {connect} from "react-redux";
+import {ReduxState} from "../../shared/constants/constants";
 
 type SizeType = Parameters<typeof Form>[0]['size'];
 
@@ -87,4 +89,9 @@ const Pets = () => {
     );
 };
 
-export default Pets;
+const mapStateToProps = ({pets}:ReduxState) => {
+    return {pets}
+}
+
+export default connect(mapStateToProps)(Pets)
+;

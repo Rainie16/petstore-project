@@ -1,9 +1,9 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, SyntheticEvent, useEffect, useState} from 'react';
 import { Form, Input, InputNumber, Button } from 'antd';
 import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {ReduxState} from "../../shared/constants/constants";
-import {getUserInfoById} from "../../actions/userinfo.action";
+import {addUserInfo, editUserInfo, getUserInfoById} from "../../actions/userinfo.action";
 import {UserInfo} from "../../shared/models/userInfo";
 
 
@@ -27,72 +27,86 @@ const validateMessages = {
 
 
 const UserInfos: FC<UserInfosProps> = ({
-    userInfo,
-    match,
-    handleGetUserInfoById
+     userInfo,
+    // match,
+    // handleGetUserInfoById
                                      }) => {
 
-    console.log("match", match);
-    console.log('userinfo', userInfo);
-    const uid = userInfo?.id;
-    console.log("uid", uid);
-    const id = match.params.id;
+    const userState = useSelector((state:any)=>state?.user);
+    console.log('userState', userState);
     const [details, setDetails] = useState<any>({});
     console.log('detailsssssssssss', details);
-    useEffect(() => {
-        const handleGetData = async () => {
-            try {
-                const result: any = await (!!handleGetUserInfoById &&
-                    handleGetUserInfoById(id));
-                if (result?.payload.status === 200) {
-                    setDetails(result?.payload.data);
-                    console.log('result', result);
-                } else throw result.payload;
-            } catch (error) {
-                console.log(error)
-            }
-        };
-        console.log("userinfo match",match)
-        handleGetData();
-    }, [match]);
 
-    // const onFinish = (values: any) => {
-    //     console.log(values);
-    // };
+    const handleFormControl = (event: SyntheticEvent) => {
+        const inputEle = event.target as HTMLInputElement;
+        const infoCopy = {
+            ...details,
+            [inputEle.id]: inputEle.value
+        };
+        setDetails(infoCopy);
+        console.log('what is the infoCopy now', details);
+    }
+
+    const dispatch = useDispatch();
+    const dispatch1 = useDispatch();
+
+    useEffect(() => {
+        if(userState?.userInfo?.user?.userInfo) {
+            setDetails(userState.userInfo.user.userInfo)
+            console.log('inside useEffect', details)
+        }
+
+    },[details]);
+
+    const submitHandler = (event: SyntheticEvent) => {
+        event.preventDefault();
+        dispatch(editUserInfo(details));
+    }
 
     return (
-        <Form {...layout} name="nest-messages" validateMessages={validateMessages}>
+        <Form
+            onFinish={submitHandler}
+            {...layout} name="nest-messages"
+            validateMessages={validateMessages}
+        >
             <h2>Personal Info</h2>
             <Form.Item name={['userinfo', 'name']} label="Name" rules={[{ required: true }]}>
-                <Input placeholder={details.name}></Input>
+                <Input id="name" value={details.name} placeholder={details.name} onChange={handleFormControl}></Input>
             </Form.Item>
             <Form.Item name={['userinfo', 'email']} label="Email" rules={[{ type: 'email' }]}>
-                <Input placeholder={details.email}></Input>
+                <Input id="email" value={details.email} placeholder={details.email} onChange={handleFormControl}></Input>
             </Form.Item>
             <Form.Item name={['userinfo', 'phone']} label="phone" rules={[{ type: 'string' }]}>
-                <Input placeholder={details.phone}></Input>
+                <Input id="phone" value={details.phone} placeholder={details.phone} onChange={handleFormControl}></Input>
             </Form.Item>
             <Form.Item name={['userinfo', 'address']} label="address">
-                <Input.TextArea placeholder={details.address}></Input.TextArea>
+                <Input.TextArea id="address" value={details.address} placeholder={details.address} onChange={handleFormControl}></Input.TextArea>
+            </Form.Item>
+            {/*{*/}
+            {/*    !details ?*/}
+            {/*        <Form.Item name={['userinfo', 'submit']} label="Submit">*/}
+            {/*            <Button>Submit</Button>*/}
+            {/*        </Form.Item>*/}
+            {/*        :*/}
+            {/*        <Form.Item name={['userinfo', 'update']} label="Update">*/}
+            {/*            <Button>Update</Button>*/}
+            {/*        </Form.Item>*/}
+            {/*}*/}
+            <Form.Item name={['userinfo', 'submit']} label="Submit">
+                <Button>Submit</Button>
             </Form.Item>
         </Form>
     );
 };
 
-const mapStateToProps = ({userInfo}: ReduxState) => {
-    return {userInfo};
-};
+// const mapStateToProps = (state: ReduxState) => {
+//     console.log('{userinfo}', state.user)
+//     return state;
+// };
 
-
-const mapDispatchToProps = (dispatch: any) => ({
-    handleGetUserInfoById: (uid: number) => dispatch(getUserInfoById(uid))
-});
-
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(UserInfos));
+export default connect()(UserInfos);
 
 interface UserInfosProps {
-    handleGetUserInfoById?: (uid: number) => object;
     match?:any;
     userInfo: UserInfo;
 }

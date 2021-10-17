@@ -9,7 +9,7 @@ export interface User {
     username: string,
     password:string,
     userinfo: any;
-    pets: Pet [];
-    paymentInfo: PaymentInfo [];
-    orders: Order [];
+    // pets: Pet [];
+    // paymentInfo: PaymentInfo [];
+    // orders: Order [];
 }

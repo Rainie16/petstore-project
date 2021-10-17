@@ -2,6 +2,7 @@ import {Product} from "../models/product";
 import {Storeservicetype} from "../models/storeservicetype";
 import {User} from "../models/user";
 import {UserInfo} from "../models/userInfo";
+import {Pet} from "../models/pet";
 
 export const appConstants = {
     // routes
@@ -12,7 +13,9 @@ export const appConstants = {
     servicesRoute: '/storeservices',
     productByType: '/products/:type',
     productDetailById: '/products/:type/:id',
-    userInfoRoute:'/user-details/:id',
+    userInfoRoute:'/user-details',
+    petsRoute:'/pets',
+    paymentRoute:'/payments',
 
     // actions
     GET_PRODUCTS: 'GET_PRODUCTS',
@@ -25,10 +28,15 @@ export const appConstants = {
     LOGOUT: 'LOGOUT',
     GET_USER_INFO_BY_ID: 'GET_USER_INFO_BY_ID',
     ADD_USER_INFO: 'ADD_USER_INFO',
+    EDIT_USER_INFO: 'EDIT_USER_INFO',
+    GET_PETS: 'GET_PETS',
+    ADD_PET: 'ADD_PET',
+    EDIT_PET: 'EDIT_PET',
 
 };
 
 export interface ReduxState {
+    pets: Pet []
     user: User,
     userInfo: UserInfo,
     products: Product [],

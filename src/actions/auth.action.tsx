@@ -6,10 +6,8 @@ import {User} from "../shared/models/user";
 export const register = (user: {username:string, password:string}) => {
     const registerPromise = axios.post(
         `${process.env.REACT_APP_API}/users`,
-       user,
-        {withCredentials: true}
+            user,
     );
-
     return {
         type: appConstants.REGISTER,
         payload: registerPromise
