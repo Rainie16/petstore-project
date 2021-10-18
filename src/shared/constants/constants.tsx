@@ -34,7 +34,7 @@ export const appConstants = {
     ADD_PET: 'ADD_PET',
     EDIT_PET: 'EDIT_PET',
     TOGGLE_CART_HIDDEN: 'TOGGLE_CART_HIDDEN',
-    ADD_PRODUCT_TO_CART: 'ADD_PRODUCT_TO_CART',
+    ADD_ITEM: 'ADD_ITEM',
 
     // dog breeds:
     DogBreed: [

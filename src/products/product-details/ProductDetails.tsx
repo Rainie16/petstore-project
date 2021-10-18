@@ -6,6 +6,7 @@ import { productDetailById } from "../../actions/products.action";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "./ProductDetails.scss"
+import {addItem} from "../../actions/cart.action";
 
 const ProductDetails: FC<ProductDetailsProps> = ({
   match,

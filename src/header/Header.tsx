@@ -1,12 +1,10 @@
 import React, { FC, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-import { appConstants } from "../shared/constants/constants";
 import { Menu } from "antd";
 import "./Header.scss";
-import Login from "../login/Login";
-import {logout} from "../actions/auth.action";
 import {connect, useSelector} from "react-redux";
+import CartIcon from "../cart/cart-icon/CartIcon";
+
 
 const Header: FC<HeaderProps> = ({ history }) => {
   const userState = useSelector((state:any)=> state?.user);
@@ -32,6 +30,9 @@ const Header: FC<HeaderProps> = ({ history }) => {
                 />
                 PAW PAW SHOP
             </span>
+            <span>
+            <CartIcon/>
+            </span>
           </div>
         <Menu
           onClick={(e) => handleClick(e)}
@@ -45,6 +46,14 @@ const Header: FC<HeaderProps> = ({ history }) => {
             <Menu.Item key="/products/cat">Cat</Menu.Item>
           </SubMenu>
           <Menu.Item key="/service">Service</Menu.Item>
+          {
+            userState?.userInfo?.user &&
+            <SubMenu key="/about-me" title="About me">
+              <Menu.Item key={`/user-details`}>personal info</Menu.Item>
+              <Menu.Item key={`/pets`}>furry family</Menu.Item>
+              <Menu.Item key={`/payments`}>payment info</Menu.Item>
+            </SubMenu>
+          }
             {
               !userState?.userInfo?.user?
               <SubMenu className='login' key="/loginOrRegister" title="Login">
@@ -55,15 +64,8 @@ const Header: FC<HeaderProps> = ({ history }) => {
               <Menu.Item key="/logout">Logout</Menu.Item>
             }
 
-          {
-            userState?.userInfo?.user &&
-            <SubMenu key="/about-me" title="About me">
-              <Menu.Item key={`/user-details`}>personal info</Menu.Item>
-              <Menu.Item key={`/pets`}>furry family</Menu.Item>
-              <Menu.Item key={`/payments`}>payment info</Menu.Item>
-            </SubMenu>
-          }
         </Menu>
+
       </nav>
     </header>
   );
