@@ -9,7 +9,10 @@ export const userInfoReducer = (state: UserInfo | null = null, action: userInfoA
             console.log(action.payload.data);
             return action.payload.data;
         case appConstants.ADD_USER_INFO:
-            console.log('userinfo action', state);
+            console.log('add userinfo reducer',state, action.payload.data);
+            return state;
+        case appConstants.EDIT_USER_INFO:
+            console.log('edit userinfo reducer state', state, 'data', action.payload.data);
             return state;
         default:
             return state;

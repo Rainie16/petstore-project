@@ -16,6 +16,7 @@ export const appConstants = {
     userInfoRoute:'/user-details',
     petsRoute:'/pets',
     paymentRoute:'/payments',
+    cartRoute: '/shopping-cart',
 
     // actions
     GET_PRODUCTS: 'GET_PRODUCTS',
@@ -32,6 +33,18 @@ export const appConstants = {
     GET_PETS: 'GET_PETS',
     ADD_PET: 'ADD_PET',
     EDIT_PET: 'EDIT_PET',
+    TOGGLE_CART_HIDDEN: 'TOGGLE_CART_HIDDEN',
+    ADD_PRODUCT_TO_CART: 'ADD_PRODUCT_TO_CART',
+
+    // dog breeds:
+    DogBreed: [
+        {name:'Ameican Eskimo'},
+        {name:'BullDog'},
+        {name:'Chihuahua'},
+        {name:'Chihuahua'},
+        {name:'Poodle'},
+    ]
+    ,
 
 };
 

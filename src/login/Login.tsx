@@ -21,7 +21,6 @@ const Login = (props:RouteComponentProps) => {
             [inputEle.name]: inputEle.value
         };
         setUser(userCopy);
-        console.log("what will return for setUser",user);
     };
 
     const submitHandler = (event: SyntheticEvent) => {
@@ -64,7 +63,6 @@ const Login = (props:RouteComponentProps) => {
             <div><input name="username" placeholder="username" value={user.username} onChange={handleFormControl} type="text"/></div>
             <div><input name="password" placeholder="password" value={user.password} onChange={handleFormControl} type="password"/></div>
             <button className="btn btn-primary">Login</button>
-
         </form>
     );
 };

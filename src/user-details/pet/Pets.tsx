@@ -13,11 +13,11 @@ import {
 } from 'antd';
 import moment from 'moment';
 import {connect} from "react-redux";
-import {ReduxState} from "../../shared/constants/constants";
+import {appConstants, ReduxState} from "../../shared/constants/constants";
 
 type SizeType = Parameters<typeof Form>[0]['size'];
 
-const Pets = () => {
+const Pets = (props: PetsProps) => {
     const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
     const onFormLayoutChange = ({ size }: { size: SizeType }) => {
         setComponentSize(size);
@@ -54,14 +54,20 @@ const Pets = () => {
                                 value: 'dog',
                                 label: 'Dog',
                                 children: [
+
+                                    {
+                                        value: 'american eskimo',
+                                        label: 'American Eskimo',
+                                    },
                                     {
                                         value: 'bulldog',
                                         label: 'Bulldog',
                                     },
                                     {
-                                        value: 'poodle',
-                                        label: 'Poodle',
+                                        value: 'chihuahua',
+                                        label: 'Chihuahua',
                                     },
+
                                 ],
                             },
                             {
@@ -69,8 +75,16 @@ const Pets = () => {
                                 label: 'Cat',
                                 children: [
                                     {
-                                        value: 'english-short hair',
-                                        label: 'english-short hair',
+                                        value: 'british short hair',
+                                        label: 'British Short Hair',
+                                    },
+                                    {
+                                        value: 'ragdoll',
+                                        label: 'Ragdoll',
+                                    },
+                                    {
+                                        value: 'scottish fold',
+                                        label: 'Scottish Fold',
                                     },
                                 ],
 
@@ -93,5 +107,9 @@ const mapStateToProps = ({pets}:ReduxState) => {
     return {pets}
 }
 
-export default connect(mapStateToProps)(Pets)
-;
+export default connect(mapStateToProps)(Pets);
+
+interface PetsProps {
+    dogBreed: string,
+    catBreed: string,
+}

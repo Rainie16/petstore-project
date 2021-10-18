@@ -5,6 +5,7 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import {ReduxState} from "../../shared/constants/constants";
 import {addUserInfo, editUserInfo, getUserInfoById} from "../../actions/userinfo.action";
 import {UserInfo} from "../../shared/models/userInfo";
+import {userInfo} from "os";
 
 
 const layout = {
@@ -26,16 +27,13 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 
-const UserInfos: FC<UserInfosProps> = ({
-     userInfo,
-    // match,
-    // handleGetUserInfoById
-                                     }) => {
+const UserInfos: FC<UserInfosProps> = () => {
 
     const userState = useSelector((state:any)=>state?.user);
     console.log('userState', userState);
     const [details, setDetails] = useState<any>({});
     console.log('detailsssssssssss', details);
+
 
     const handleFormControl = (event: SyntheticEvent) => {
         const inputEle = event.target as HTMLInputElement;
@@ -44,7 +42,6 @@ const UserInfos: FC<UserInfosProps> = ({
             [inputEle.id]: inputEle.value
         };
         setDetails(infoCopy);
-        console.log('what is the infoCopy now', details);
     }
 
     const dispatch = useDispatch();
@@ -56,11 +53,22 @@ const UserInfos: FC<UserInfosProps> = ({
             console.log('inside useEffect', details)
         }
 
-    },[details]);
+    },[]);
+
+    const clickHandler = () => {
+        dispatch(editUserInfo(details));
+    }
+
+    const clickHandler2 = () => {
+        console.log("adduserinfo", details);
+        dispatch1(addUserInfo(details));
+    }
 
     const submitHandler = (event: SyntheticEvent) => {
+        console.log('submithandler');
         event.preventDefault();
         dispatch(editUserInfo(details));
+        dispatch1(addUserInfo(details));
     }
 
     return (
@@ -82,26 +90,26 @@ const UserInfos: FC<UserInfosProps> = ({
             <Form.Item name={['userinfo', 'address']} label="address">
                 <Input.TextArea id="address" value={details.address} placeholder={details.address} onChange={handleFormControl}></Input.TextArea>
             </Form.Item>
-            {/*{*/}
-            {/*    !details ?*/}
-            {/*        <Form.Item name={['userinfo', 'submit']} label="Submit">*/}
-            {/*            <Button>Submit</Button>*/}
-            {/*        </Form.Item>*/}
-            {/*        :*/}
-            {/*        <Form.Item name={['userinfo', 'update']} label="Update">*/}
-            {/*            <Button>Update</Button>*/}
-            {/*        </Form.Item>*/}
-            {/*}*/}
-            <Form.Item name={['userinfo', 'submit']} label="Submit">
-                <Button>Submit</Button>
-            </Form.Item>
+            {
+                userState?.userInfo?.user?.userInfo?
+                    <Form.Item name={['userinfo', 'update']} label="Update">
+                        <Button onClick={clickHandler}>Update</Button>
+                    </Form.Item> :
+                    <Form.Item name={['userinfo', 'submit']} label="Submit">
+                        <Button onClick={clickHandler2}>Submit</Button>
+                    </Form.Item>
+            }
+
+            {/*<Form.Item name={['userinfo', 'submit']} label="Submit">*/}
+            {/*    <Button onClick={clickHandler}>Submit</Button>*/}
+            {/*</Form.Item>*/}
         </Form>
     );
 };
 
-// const mapStateToProps = (state: ReduxState) => {
-//     console.log('{userinfo}', state.user)
-//     return state;
+// const mapStateToProps = ({userInfo}: ReduxState) => {
+//     console.log('{userinfo}', {userInfo})
+//     return {userInfo};
 // };
 
 export default connect()(UserInfos);
