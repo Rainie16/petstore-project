@@ -50,11 +50,8 @@ const Paymentinfo = () => {
                 <Form.Item label="CVV" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item label="month" rules={[{ required: true }]}>
+                <Form.Item label="Expiration Date" rules={[{ required: true }]}>
                     <DatePicker picker="month" disabledDate={disableDate}/>
-                </Form.Item>
-                <Form.Item label="year" rules={[{ required: true }]}>
-                    <DatePicker picker="year" disabledDate={disableDate}/>
                 </Form.Item>
                 <Form.Item label="Submit">
                     <Button>Submit</Button>

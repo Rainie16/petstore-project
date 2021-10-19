@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Form,
     Input,
@@ -12,12 +12,26 @@ import {
     Switch,
 } from 'antd';
 import moment from 'moment';
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {appConstants, ReduxState} from "../../shared/constants/constants";
+import {Pet} from "../../shared/models/pet";
 
 type SizeType = Parameters<typeof Form>[0]['size'];
 
-const Pets = (props: PetsProps) => {
+const Pets = () => {
+
+    const petState = useSelector((state:any)=>state?.user);
+    console.log('petState', petState);
+
+    const [petinfo, setPetinfo] = useState<any>({});
+
+    useEffect(()=>{
+        if(petState?.userInfo?.user?.pets) {
+            setPetinfo(petState.userInfo.user.pets[0]);
+            console.log('petinfo:', petState.userInfo.user.pets[0]);
+        }
+    }, [])
+
     const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
     const onFormLayoutChange = ({ size }: { size: SizeType }) => {
         setComponentSize(size);
@@ -31,76 +45,102 @@ const Pets = (props: PetsProps) => {
         <>
             <h2>My furry family:</h2>
             <Form
-                labelCol={{ span: 4 }}
-                wrapperCol={{ span: 14 }}
-                layout="horizontal"
-                initialValues={{ size: componentSize }}
-                onValuesChange={onFormLayoutChange}
-                size={componentSize as SizeType}
+            labelCol={{span: 4}}
+            wrapperCol={{span: 14}}
+            layout="horizontal"
+            initialValues={{size: componentSize}}
+            onValuesChange={onFormLayoutChange}
+            size={componentSize as SizeType}
             >
-                <Form.Item label="Name">
-                    <Input />
-                </Form.Item>
-                <Form.Item label="Gender">
-                    <Select>
-                        <Select.Option value="female">Female</Select.Option>
-                        <Select.Option value="male">Male</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item label="Breed">
-                    <Cascader
-                        options={[
-                            {
-                                value: 'dog',
-                                label: 'Dog',
-                                children: [
+            <Form.Item label="Name">
+            <Input id="name" value={petinfo?.name} placeholder={petinfo?.name} />
+            </Form.Item>
+                {
+                    petState?.userInfo?.user?.pets?
+                    <Form.Item label="Gender">
+                        <Input id="gender" value={petinfo?.gender} placeholder={petinfo?.gender} />
+                    </Form.Item>
+                    :
+                    <Form.Item label="Gender">
+                        <Select>
+                            <Select.Option value="female">Female</Select.Option>
+                            <Select.Option value="male">Male</Select.Option>
+                        </Select>
+                    </Form.Item>
+                }
+                {
+                    petState?.userInfo?.user?.pets?
+                    <Form.Item label="Breed">
+                        <Input id="breed" value={petinfo?.breed} placeholder={petinfo?.breed} />
+                    </Form.Item>
+                        :
+                    <Form.Item label="Breed">
+                        <Cascader placeholder="please choose breed"
+                                  options={[
+                                      {
+                                          value: 'dog',
+                                          label: 'Dog',
+                                          children: [
 
-                                    {
-                                        value: 'american eskimo',
-                                        label: 'American Eskimo',
-                                    },
-                                    {
-                                        value: 'bulldog',
-                                        label: 'Bulldog',
-                                    },
-                                    {
-                                        value: 'chihuahua',
-                                        label: 'Chihuahua',
-                                    },
+                                              {
+                                                  value: 'american eskimo',
+                                                  label: 'American Eskimo',
+                                              },
+                                              {
+                                                  value: 'bulldog',
+                                                  label: 'Bulldog',
+                                              },
+                                              {
+                                                  value: 'chihuahua',
+                                                  label: 'Chihuahua',
+                                              },
 
-                                ],
-                            },
-                            {
-                                value: 'cat',
-                                label: 'Cat',
-                                children: [
-                                    {
-                                        value: 'british short hair',
-                                        label: 'British Short Hair',
-                                    },
-                                    {
-                                        value: 'ragdoll',
-                                        label: 'Ragdoll',
-                                    },
-                                    {
-                                        value: 'scottish fold',
-                                        label: 'Scottish Fold',
-                                    },
-                                ],
+                                          ],
+                                      },
+                                      {
+                                          value: 'cat',
+                                          label: 'Cat',
+                                          children: [
+                                              {
+                                                  value: 'british short hair',
+                                                  label: 'British Short Hair',
+                                              },
+                                              {
+                                                  value: 'ragdoll',
+                                                  label: 'Ragdoll',
+                                              },
+                                              {
+                                                  value: 'scottish fold',
+                                                  label: 'Scottish Fold',
+                                              },
+                                          ],
 
-                            }
-                        ]}
-                    />
+                                      }
+                                  ]}
+                        />
+                    </Form.Item>
+                }
+                {
+                    petState?.userInfo?.user?.pets?
+                    <Form.Item label="Birthday">
+                        <Input id="DOB" value={petinfo?.birthday} placeholder={petinfo?.birthday} />
+                    </Form.Item>
+                        :
+                    <Form.Item label="Birthday">
+                        <DatePicker
+                            placeholder="DOB"
+                            disabledDate={disableDate}
+                        />
+                    </Form.Item>
+                }
+                <Form.Item label="Add Pet">
+                    <Button>Add Pet</Button>
                 </Form.Item>
-                <Form.Item label="Birthday">
-                    <DatePicker disabledDate={disableDate}/>
-                </Form.Item>
-                <Form.Item label="Submit">
-                    <Button>Submit</Button>
-                </Form.Item>
+
             </Form>
-        </>
+            </>
     );
+
 };
 
 const mapStateToProps = ({pets}:ReduxState) => {

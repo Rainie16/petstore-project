@@ -18,7 +18,7 @@ const Products: FC<ProductsProps> = ({
   // console.log(!!getProductsByType && getProductsByType(type));
   const [products, setProducts] = useState<Product[]>([]);
   const [keyword, setKeyword] = useState('');
-  const [init, setInit] = useState([]);
+  const [init, setInit] = useState<Product[]>([]);
 
   const {Search} = Input;
 
@@ -37,6 +37,7 @@ const Products: FC<ProductsProps> = ({
       }
     };
     handleGetData();
+    console.log('[match]:',[match]);
 //   history.push('/profile/id')
   }, [match]);
 
@@ -52,21 +53,25 @@ const Products: FC<ProductsProps> = ({
 
 
   useEffect(()=>{
-    console.log('init', init, ',products', products);
     searchHandler(keyword);
   }, [keyword])
 
 
   const searchHandler = (keyword: string) => {
-    setProducts(init);
-  const filteredProduct = products.filter((p)=>{
+
+    if(keyword){
+    let filteredProduct = products.filter((p)=>{
     if(p.name.toLowerCase().startsWith(keyword)
         || p.brand.toLowerCase().startsWith(keyword))
       return p;
-  })
-  console.log('after products', products);
-  console.log('after filter', filteredProduct);
-  setProducts(filteredProduct);
+    }
+    )
+    console.log('after filtered products', products);
+    setProducts(filteredProduct);
+    }else{
+      setProducts(init);
+      console.log('init:', init);
+    }
   }
 
   return (
