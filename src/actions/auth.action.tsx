@@ -45,8 +45,6 @@ export const checkLogin = () => {
         `${process.env.REACT_APP_API}/checklogin`
     , {withCredentials: true});
 
-    //console.log("what is checkloginpromise",checkLoginPromise);
-
     return {
         type: appConstants.CHECK_LOGIN,
         payload: checkLoginPromise

@@ -1,13 +1,18 @@
+import {Product} from "../shared/models/product";
+
+
 export const addItemToCart = (cartItems: any, cartItemToAdd: any) => {
 	const existingCartItem = cartItems.find(
-		(cartItem: any) => cartItem.id === cartItemToAdd.id,
+		(cartItem: Product) => cartItem.id === cartItemToAdd.id,
 	);
 
 	if (existingCartItem) {
-		return cartItems.map((cartItem: any) =>
+		return cartItems.map((cartItem: Product) =>
 			cartItem.id === cartItemToAdd.id
-				? { ...cartItem, quantity: cartItem.quantity + 1 }
-				: cartItem,
+				?
+				{ ...cartItem, quantity: (cartItem.quantity)! + 1 }
+				:
+				cartItem,
 		);
 	}
 

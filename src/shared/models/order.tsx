@@ -6,5 +6,4 @@ export interface Order {
     shipping_address: string;
     status: string;
     paymentInfo_id: number;
-    products: Product[]
 }

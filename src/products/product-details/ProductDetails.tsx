@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
+import React, {FC, SyntheticEvent, useEffect, useState} from "react";
 import { ReduxState } from "../../shared/constants/constants";
 import { Product } from "../../shared/models/product";
 import ProductOverview from "../product-overview/ProductOverview";
 import { productDetailById } from "../../actions/products.action";
 import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import "./ProductDetails.scss"
 import {addItem} from "../../actions/cart.action";
 
@@ -14,6 +14,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({
 }) => {
   const id = match.params.id;
   const [details, setDetails] = useState<any>({});
+
   useEffect(() => {
     const handleGetData = async () => {
       try {
@@ -30,6 +31,13 @@ const ProductDetails: FC<ProductDetailsProps> = ({
     handleGetData();
   }, [match]);
 
+  const dispatch = useDispatch();
+
+  const clickHandler = () => {
+    console.log('clickHandler', details);
+    dispatch(addItem(details));
+  }
+
   return (
     <div className="productDetails">
       <img src={details.image} alt="img"/>
@@ -39,11 +47,12 @@ const ProductDetails: FC<ProductDetailsProps> = ({
         <div>price: {details.price}</div>
         <div>stock: {details.stock}</div>
         <input type="text"></input>
-        <button>Add to cart</button>
+        <button className="btn btn-primary" onClick={clickHandler}>Add to cart</button>
       </div>
     </div>
   );
 };
+
 
 const mapStateToProps = ({ products }: ReduxState) => {
   return { products };

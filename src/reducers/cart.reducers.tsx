@@ -7,14 +7,18 @@ const INITIAL_STATE = {
 	cartItems: [],
 };
 
-const cartReducer = (state = INITIAL_STATE, action:any) => {
+const cartReducer = (state = INITIAL_STATE, action:cartAction) => {
 	switch (action.type) {
 		case appConstants.TOGGLE_CART_HIDDEN:
+			console.log('togglecart reducer', state);
 			return {
 				...state,
 				hidden: !state.hidden,
 			};
+
 		case appConstants.ADD_ITEM:
+			console.log('additem reducer', state);
+			// localStorage.setItem("cart", JSON.stringify(product));
 			return {
 				...state,
 				// cartItems: [...state.cartItems, action.payload],
@@ -27,3 +31,8 @@ const cartReducer = (state = INITIAL_STATE, action:any) => {
 };
 
 export default cartReducer;
+
+export interface cartAction {
+	type: string,
+	payload?: object
+}

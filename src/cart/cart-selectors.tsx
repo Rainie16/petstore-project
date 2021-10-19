@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
+import {Product} from "../shared/models/product";
 
-const selectCart = (state:any) => state.cart;
+const selectCart = (state:any) => state?.cart;
 
 export const selectCartItems = createSelector(
 	[selectCart],
@@ -9,7 +10,7 @@ export const selectCartItems = createSelector(
 
 export const selectCartItemsCount = createSelector(
 	[selectCartItems],
-	(cartItems: any) =>
+	(cartItems: Product []) =>
 		cartItems?.reduce(
 			(accumulatedQuantity: any, cartItem: any) =>
 				accumulatedQuantity + cartItem.quantity,

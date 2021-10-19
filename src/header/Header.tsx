@@ -4,9 +4,11 @@ import { Menu } from "antd";
 import "./Header.scss";
 import {connect, useSelector} from "react-redux";
 import CartIcon from "../cart/cart-icon/CartIcon";
+import CartDropdown from "../cart/cart-dropdown/CartDropdown";
 
 
 const Header: FC<HeaderProps> = ({ history }) => {
+  const ddhidden = useSelector((state:any)=>state.cart)
   const userState = useSelector((state:any)=> state?.user);
   const { SubMenu } = Menu;
   const [current, setCurrent] = useState("");
@@ -32,6 +34,9 @@ const Header: FC<HeaderProps> = ({ history }) => {
             </span>
             <span>
             <CartIcon/>
+              {
+                ddhidden.hidden? null: <CartDropdown/>
+              }
             </span>
           </div>
         <Menu
@@ -69,7 +74,8 @@ const Header: FC<HeaderProps> = ({ history }) => {
       </nav>
     </header>
   );
-};
+}
+
 
 export default (withRouter(connect()(Header)));
 

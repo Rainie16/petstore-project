@@ -17,6 +17,7 @@ export const getProductsByType = (payload: string )=> {
         payload: getProductsByTypePromise,
     };
 }
+
 export const productDetailById = (payload: string )=> {
     const getProductsDetailsByIdPromise = axios.get(`http://localhost:8080/products/${payload}`);
     return {

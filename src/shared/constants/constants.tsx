@@ -3,6 +3,7 @@ import {Storeservicetype} from "../models/storeservicetype";
 import {User} from "../models/user";
 import {UserInfo} from "../models/userInfo";
 import {Pet} from "../models/pet";
+import {Order} from "../models/order";
 
 export const appConstants = {
     // routes
@@ -36,16 +37,6 @@ export const appConstants = {
     TOGGLE_CART_HIDDEN: 'TOGGLE_CART_HIDDEN',
     ADD_ITEM: 'ADD_ITEM',
 
-    // dog breeds:
-    DogBreed: [
-        {name:'Ameican Eskimo'},
-        {name:'BullDog'},
-        {name:'Chihuahua'},
-        {name:'Chihuahua'},
-        {name:'Poodle'},
-    ]
-    ,
-
 };
 
 export interface ReduxState {
@@ -54,4 +45,6 @@ export interface ReduxState {
     userInfo: UserInfo,
     products: Product [],
     storeservicetypes: Storeservicetype [],
+    cart: Product
+    orders: Order [],
 }
