@@ -24,7 +24,6 @@ const Header: FC<HeaderProps> = ({ history }) => {
     <header>
       <nav>
           <div>
-
             <span>
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY-TmKUI2BxcHsU0oW7U19nphXSte3ik9Riw&usqp=CAU"

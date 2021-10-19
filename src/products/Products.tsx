@@ -7,6 +7,7 @@ import "./Products.scss";
 import ProductOverview from "./product-overview/ProductOverview";
 import { withRouter, Link } from "react-router-dom";
 import { resolveModuleName } from "typescript";
+import { Space, Input } from "antd";
 
 const Products: FC<ProductsProps> = ({
   match,
@@ -16,6 +17,8 @@ const Products: FC<ProductsProps> = ({
   const type = match.params.type;
   // console.log(!!getProductsByType && getProductsByType(type));
   const [products, setProducts] = useState<Product[]>([]);
+
+  const {Search} = Input;
 
   useEffect(() => {
     const handleGetData = async () => {
@@ -36,17 +39,30 @@ const Products: FC<ProductsProps> = ({
 //   history.push('/profile/id')
   }, [match]);
 
-  console.log("pro", products);
+
+  // const onSearch = value => console.log(value);
+
+
+
+
   return (
-    <div className="Products">
-      {products?.map((p) => (
+    <div>
+      <div className="search-bar">
+        <Space>
+          <Search placeholder="input search text"  style={{ width: 200 }} />
+        </Space>
+      </div>
+      <div className="Products">
+        {products?.map((p) => (
         <Link to={`/products/${type}/${p.id}`} key={p.name}>
           <ProductOverview product={p} />
         </Link>
-      ))}
+        ))}
+      </div>
     </div>
-  );
-};
+
+    );
+    };
 
 const mapStateToProps = ({ products }: ReduxState) => {
   return { products };

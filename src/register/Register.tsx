@@ -54,13 +54,33 @@ const Register = (props: RouteComponentProps) => {
     // },[user]);
 
     return(
-        <form onSubmit={submitHandler}>
-            <h4>I do not have an account</h4>
+        <form className="sign-in" onSubmit={submitHandler}>
+            <h2 className="title">I do not have an account</h2>
             <span>sign up with your username and password</span>
-            <input name="username" placeholder="username" value={user.username} onChange={handleFormControl} type="text"/>
-            <input name="password" placeholder="password" value={user.password} onChange={handleFormControl} type="password"/>
-            <input name="confirmPassword" placeholder="confirm password" value={user.confirmPassword} onChange={handleFormControl} type="password"/>
-            <button>Register!</button>
+            <div>
+                <input
+                    name="username"
+                    placeholder="username"
+                    value={user.username}
+                    onChange={handleFormControl}
+                    type="text"/>
+            </div>
+            <div>
+                <input
+                    name="password"
+                    placeholder="password"
+                    value={user.password}
+                    onChange={handleFormControl}
+                    type="password"/>
+            </div>
+            <div>
+                <input
+                    name="confirmPassword"
+                    placeholder="confirm password"
+                    value={user.confirmPassword}
+                    onChange={handleFormControl}
+                    type="password"/></div>
+            <button className="btn btn-primary">Register!</button>
         </form>
     );
 };

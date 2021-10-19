@@ -56,9 +56,8 @@ const Login = (props:RouteComponentProps) => {
 
     return(
 
-        <form onSubmit={submitHandler}>
-
-            <h2>I already have an account</h2>
+        <form className="sign-in" onSubmit={submitHandler}>
+            <h2 className="title">I already have an account</h2>
             <div>Sign in with your username and password</div>
             <div><input name="username" placeholder="username" value={user.username} onChange={handleFormControl} type="text"/></div>
             <div><input name="password" placeholder="password" value={user.password} onChange={handleFormControl} type="password"/></div>

@@ -2,6 +2,7 @@ import {Product} from "../../shared/models/product";
 import "./ProductOverview.scss"
 
 const ProductOverview = ({product}: ProductProps) => {
+
     return (
         <div className="ProductOverview">
             <img className="product-image" src={product.image} alt={product.name}/>
