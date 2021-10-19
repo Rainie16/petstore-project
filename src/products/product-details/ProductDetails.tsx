@@ -44,7 +44,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({
       <div>
         <div>{details.brand}</div>
         <div>{details.name}</div>
-        <div>price: {details.price}</div>
+        <div>price: $ {details.price}</div>
         <div>stock: {details.stock}</div>
         <input type="text"></input>
         <button className="btn btn-primary" onClick={clickHandler}>Add to cart</button>

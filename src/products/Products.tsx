@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, {FC, SyntheticEvent, useEffect, useState} from "react";
 import { Product } from "../shared/models/product";
 import { ReduxState } from "../shared/constants/constants";
 import { connect } from "react-redux";
@@ -17,6 +17,8 @@ const Products: FC<ProductsProps> = ({
   const type = match.params.type;
   // console.log(!!getProductsByType && getProductsByType(type));
   const [products, setProducts] = useState<Product[]>([]);
+  const [keyword, setKeyword] = useState('');
+  const [init, setInit] = useState([]);
 
   const {Search} = Input;
 
@@ -27,29 +29,51 @@ const Products: FC<ProductsProps> = ({
         const result: any = await (!!handleGetProductsByType &&
           handleGetProductsByType(type));
         if (result?.payload.status === 200) {
+          setInit(result?.payload.data);
           setProducts(result?.payload.data);
-          console.log("result", result);
         } else throw result.payload;
       } catch (error) {
         console.log("Product by Type error :", error);
       }
     };
     handleGetData();
-    console.log('matchhhhhhhh      aaa', match)
 //   history.push('/profile/id')
   }, [match]);
 
 
   // const onSearch = value => console.log(value);
 
+  const changeHandler = (event: SyntheticEvent) => {
+    const inputEle = event.target as HTMLInputElement;
+    const word = inputEle.value;
+    setKeyword(word);
+    console.log('keyword:', keyword);
+  };
 
 
+  useEffect(()=>{
+    console.log('init', init, ',products', products);
+    searchHandler(keyword);
+  }, [keyword])
+
+
+  const searchHandler = (keyword: string) => {
+    setProducts(init);
+  const filteredProduct = products.filter((p)=>{
+    if(p.name.toLowerCase().startsWith(keyword)
+        || p.brand.toLowerCase().startsWith(keyword))
+      return p;
+  })
+  console.log('after products', products);
+  console.log('after filter', filteredProduct);
+  setProducts(filteredProduct);
+  }
 
   return (
     <div>
       <div className="search-bar">
         <Space>
-          <Search placeholder="input search text"  style={{ width: 200 }} />
+          <Search placeholder="search by keyword" onSearch={searchHandler} onChange={changeHandler} style={{ width: 200 }} />
         </Space>
       </div>
       <div className="Products">
